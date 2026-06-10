@@ -1,0 +1,14 @@
+# Large / reproducible reverse-engineering artifacts (not committed)
+# The XAPK is the input; everything in extracted/ is regenerated from it.
+*.xapk
+*.apk
+extracted/
+
+# Decompiler / build noise
+*.log
+.DS_Store
+
+# Native libs (large binaries, extracted from APK)
+*.so
+*.pyc
+watch_python_src/stdlib.zip
