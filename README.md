@@ -8,6 +8,8 @@ repurpose Noise smartwatch hardware (sensors, touchscreen, BLE).
 - **[`FINDINGS.md`](./FINDINGS.md)** — append-only research log. The main deliverable.
   Documents the app stack, BLE protocols, chipsets, OTA mechanisms, and complete
   wire formats needed to build a client.
+- **[`HANDOFF.md`](./HANDOFF.md)** — action plan for the next session: get a remote
+  shell, unlock full device capabilities, and use the watch as an HID.
 - **`watch_python_src/`** — the embedded **RT-Thread / PersimWear** Python source
   extracted verbatim from the APK (`assets/python/`). This is plaintext driver code
   for the high-end watch line: MCF framing, uRPC, UDB (micro debug bridge), OTA,
