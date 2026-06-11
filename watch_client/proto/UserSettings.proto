@@ -1,0 +1,174 @@
+syntax = "proto2";
+
+import "nanopb.proto";
+import "Common.proto";
+
+option java_package = "com.zh.ble.wear.protobuf";
+option java_outer_classname = "UserProfilesProtos";
+
+enum SELanguageId {
+  ALBANIAN = 1;
+  ARABIC = 2;
+  AM_HARIC = 3;
+  IRISH = 4;
+  ORIYA = 5;
+  BASQUE = 6;
+  BELARUSIAN = 7;
+  BULGARIAN = 8;
+  POLISH = 9;
+  PERSIAN = 16;
+  BOOLEAN = 17;
+  DANISH = 18;
+  GERMAN = 19;
+  RUSSIAN = 20;
+  FRENCH = 21;
+  FILIPINO = 22;
+  FINNISH = 23;
+  CAMBODIAN = 24;
+  GEORGIAN = 25;
+  GUJARATI = 32;
+  KAZAKH = 33;
+  JAITAN_CREOLE = 34;
+  KOREAN = 35;
+  DUTCH = 36;
+  GALICIAN = 37;
+  CATALAN = 38;
+  CZECH = 39;
+  KANNADA = 40;
+  CROATIAN = 41;
+  KURDISH = 48;
+  LATIN = 49;
+  LAO = 50;
+  KINYARWANDA = 51;
+  ROMANIAN = 52;
+  MALAGASY = 53;
+  MARATHI = 54;
+  MALAYALAM = 55;
+  MALAY = 56;
+  MONGOLIAN = 57;
+  BENGALI = 64;
+  BURMESE = 65;
+  HMONG = 66;
+  ZULU_SOYTH_AFRICA = 67;
+  NEPALI = 68;
+  NORWEGIAN = 69;
+  PORTUGUESE = 70;
+  JAPANESE = 71;
+  SWEDISH = 72;
+  SERBIAN = 73;
+  SINHALA = 80;
+  SLOVAK = 81;
+  SOMALI = 82;
+  TAJIK = 83;
+  TELUGU = 84;
+  TAMIL = 85;
+  THAI = 86;
+  TURKISH = 87;
+  URDU = 88;
+  UKRAINIAN = 89;
+  UZBEK = 96;
+  SPANISH = 97;
+  GREEK = 98;
+  HUNGARIAN = 99;
+  IGBO = 100;
+  ITALIAN = 101;
+  HINDI = 102;
+  INDONESIAN = 103;
+  ENGLISH = 104;
+  VIETNAMESE = 105;
+  TRADITIONAL_CHINESE = 112;
+  SIMPLIFIED_CHINESE = 113;
+  HEBREW = 114;
+  LITHUANIAN = 115;
+  LATVIAN = 116;
+  ESTONIAN = 117;
+  SLOVENIAN = 118;
+  MALTESE = 119;
+}
+
+enum SEUnitType {
+  METRIC_SYSTEM = 0;
+  BRITISH_SYSTEM = 1;
+}
+
+enum SETemperatureType {
+  CENTIGRADE = 0;
+  FAHRENHEIT_DEGREE = 1;
+}
+
+enum SESex {
+  NEUTRAL = 0;
+  MALE = 1;
+  FEMALE = 2;
+}
+
+enum SEWearMode {
+  NotSet = 0;
+  LEFT = 1;
+  RIGHT = 2;
+}
+
+message SEUserSettings {
+  oneof payload {
+    SELanguageId language_id = 1;
+    SELanguageDetailed language_detailed = 2;
+    SEUnitType unit_type = 3;
+    SETemperatureType temperature_type = 4;
+    SEUserProfile user_profile = 5;
+    SEUserInformation user_information = 6;
+    SEGoMoreAlldaySleep user_gomore_allday_sleep = 7;
+    SEGoMoreAutoActiveSport user_gomore_auto_active_sport = 8;
+  }
+}
+
+message SEUserProfile {
+  optional uint32 height = 1;
+  optional float weight = 2;
+  optional uint32 birth = 3;
+  optional uint32 age = 4;
+  optional SESex sex = 5;
+  optional uint32 max_hr = 6;
+  optional uint32 goal_calorie = 7;
+  optional uint32 goal_step = 8;
+  optional uint32 goal_distance = 9;
+  optional uint32 goal_standing_times = 10;
+  optional SEWearMode wear_mode = 11;
+  optional uint32 goal_sleep_hour = 12;
+  optional uint32 goal_activity_duration = 13;
+  optional bool goal_step_switch = 14;
+  optional bool goal_calorie_switch = 15;
+  optional bool goal_activity_duration_switch = 16;
+  optional bool APP_weather_switch = 17;
+  optional string user_name = 18;
+  optional SESettingTime user_sleep_start_time = 19;
+  optional SESettingTime user_sleep_end_time = 20;
+}
+
+message SEUserInformation {
+  required SEUserProfile user_profile = 1;
+  optional SELanguageId language_id = 2;
+  optional SEUnitType unit_type = 3;
+  optional SETemperatureType temperature_type = 4;
+}
+
+message SEGoMoreAlldaySleep {
+  optional bool gomore_alldaysleep_switch = 1;
+  optional uint32 gomore_alldaysleep_starttime = 2;
+  optional uint32 gomore_alldaysleep_stoptime = 3;
+}
+
+message SEGoMoreAutoActiveSport {
+  optional bool gomore_auto_active_sport_switch = 1;
+  optional uint32 gomore_auto_active_sport_starttime = 2;
+  optional uint32 gomore_auto_active_sport_stoptime = 3;
+  optional uint32 gomore_auto_active_sport_activetime = 4;
+}
+
+message SELanguageDetailed {
+  message SEList {
+    repeated SELanguageId list = 1;
+  }
+  required SELanguageDetailed.SEList language_list = 1;
+  required SELanguageId default_language_id = 2;
+  required SELanguageId select_language_id = 3;
+}

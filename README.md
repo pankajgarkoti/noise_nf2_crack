@@ -5,12 +5,17 @@ repurpose Noise smartwatch hardware (sensors, touchscreen, BLE).
 
 ## What's here
 
-- **[`FINDINGS.md`](./FINDINGS.md)** — append-only research log. The main deliverable.
-  Documents the app stack, BLE protocols, chipsets, OTA mechanisms, and complete
-  wire formats needed to build a client.
-- **[`HANDOFF.md`](./HANDOFF.md)** — action plan for the next session: crack the
-  watch open (shell/code execution, full flash read/write, filesystem, custom
-  app/firmware) to gain arbitrary control of the hardware.
+- **[`CRACKED.md`](./CRACKED.md)** — ✅ **DONE.** Full host-side control of a real
+  **Noise NF 2 (NSW-421)** achieved over BLE with a from-scratch Python client
+  (`watch_client/`). The device uses a 4th, simplest stack — ZH/Zhapp "Apricot"
+  cleartext protobuf — fully reverse-engineered: bind without crypto, issue any
+  command, sync health data, switch watch faces, buzz the hardware, OTA handshake.
+- **[`FINDINGS.md`](./FINDINGS.md)** — append-only research log. Documents the app
+  stack, BLE protocols, chipsets, OTA mechanisms, and complete wire formats.
+- **`watch_client/`** — the working NF 2 client (transport, codec, recovered proto
+  schema, bind, health sync, watch-face control, OTA probe, interactive CLI).
+- **`tools/`** — `.proto` schema recovery from jadx output and from `.dex` string
+  pools (for classes jadx couldn't decompile).
 - **`watch_python_src/`** — the embedded **RT-Thread / PersimWear** Python source
   extracted verbatim from the APK (`assets/python/`). This is plaintext driver code
   for the high-end watch line: MCF framing, uRPC, UDB (micro debug bridge), OTA,

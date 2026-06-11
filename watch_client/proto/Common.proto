@@ -1,0 +1,68 @@
+syntax = "proto2";
+
+import "nanopb.proto";
+
+option java_package = "com.zh.ble.wear.protobuf";
+option java_outer_classname = "CommonProtos";
+
+enum SEErrorCode {
+  NO_ERROR = 0;
+  NOT_SUPPORT = 1;
+  DEPENDENCY_NOT_READY = 2;
+  SET_FAILED = 3;
+  PARAM_ERROR = 4;
+  UNKNOWN = 255;
+}
+
+enum SEPrepareStatus {
+  READY = 0;
+  BUSY = 1;
+  DUPLICATED = 2;
+  LOW_STORAGE = 3;
+  LOW_BATTERY = 4;
+  DOWNGRADE = 5;
+  LOW_STORAGE_TO_ASK_DELETE = 6;
+}
+
+message SEKeyValue {
+  required string key = 1;
+  required sint32 value = 2;
+}
+
+message SERangeValue {
+  required sint32 from = 1;
+  required sint32 to = 2;
+}
+
+message SEBLEConnectParameterConfig {
+  enum SEPhoneType {
+    ANDROID = 0;
+    IOS = 1;
+  }
+  optional uint32 config_change_mtu = 1;
+  optional uint32 config_ota_interval_min = 2;
+  optional uint32 config_ota_interval_max = 3;
+  optional SEBLEConnectParameterConfig.SEPhoneType phone_type = 4;
+}
+
+message SETimeDate {
+  required uint32 year = 1;
+  required uint32 month = 2;
+  required uint32 day = 3;
+}
+
+message SETime {
+  required uint32 year = 1;
+  required uint32 month = 2;
+  required uint32 day = 3;
+  required uint32 hour = 4;
+  required uint32 minute = 5;
+  required uint32 second = 6;
+}
+
+message SESettingTime {
+  required uint32 hour = 1;
+  required uint32 minuter = 2;
+  optional uint32 second = 3;
+  optional uint32 millisecond = 4;
+}

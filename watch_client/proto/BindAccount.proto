@@ -1,0 +1,63 @@
+syntax = "proto2";
+
+import "nanopb.proto";
+import "Common.proto";
+
+option java_package = "com.zh.ble.wear.protobuf";
+option java_outer_classname = "BindAccountProtos";
+
+message SEBindAccount {
+  oneof payload {
+    bool request_binding_status = 1;
+    SEBindCheck bind_check = 2;
+    SEBindResult bind_result = 3;
+    bool inquiry_pairing_status = 4;
+    bool request_pairing_result = 5;
+    string verify_user_number = 6;
+    SEVerifyResult verify_result = 7;
+    SEClassicBluetoothStatus classic_bluetooth_status = 8;
+  }
+}
+
+message SEBindCheck {
+  enum SEBindCheckResult {
+    SUCCESS = 0;
+    REFUSE = 1;
+    OVER_TIME = 2;
+    VERIFICATION_FAILED = 3;
+  }
+  required bool device_verify = 1;
+  optional string bind_random_key = 2;
+  optional SEBindCheck.SEBindCheckResult bind_check_result = 3;
+  optional string device_number = 4;
+  optional string mac = 5;
+  optional string serial_number = 6;
+  optional string firmware_version = 7;
+  optional string device_name = 8;
+}
+
+message SEBindResult {
+  enum SEPhoneType {
+    ANDROID = 0;
+    IOS = 1;
+  }
+  enum SEBindResultType {
+    SUCCESS = 0;
+    REFUSE = 1;
+    OVER_TIME = 2;
+  }
+  optional SEBindResult.SEBindResultType bind_result_type = 1;
+  optional string user_id = 2;
+  optional SEBindResult.SEPhoneType phone_type = 3;
+}
+
+message SEVerifyResult {
+  required bool verify_result_type = 1;
+  optional bool binding_status = 2;
+}
+
+message SEClassicBluetoothStatus {
+  required bool inquiry_classic_bluetooth_connect_status = 1;
+  required bool inquiry_classic_bluetooth_switch = 2;
+  optional string inquiry_classic_bluetooth_mac = 3;
+}

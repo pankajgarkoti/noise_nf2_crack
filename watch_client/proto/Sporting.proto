@@ -1,0 +1,522 @@
+syntax = "proto2";
+
+import "nanopb.proto";
+
+option java_package = "com.zh.ble.wear.protobuf";
+option java_outer_classname = "SportingProtos";
+
+enum SESportType {
+  NONE = 0;
+  RUN_OUTDOOR = 1;
+  WALK_OUTDOOR = 2;
+  RUN_INDOOR = 3;
+  CLIMBING = 4;
+  CROSS_COUNTRY = 5;
+  RIDE_OUTDOOR = 6;
+  RIDE_INDOOR = 7;
+  FREE_TRAINING = 8;
+  SWIM_INDOOR = 9;
+  SWIM_OUTDOOR = 10;
+  ELLIPTICAL_MACHINE = 11;
+  YOGA = 12;
+  ROWING_MACHINE = 13;
+  ROPE_SKIPPING = 14;
+  HIKING_OUTDOOR = 15;
+  HIGH_INTERVAL_TRAINING = 16;
+  TRIATHLON = 17;
+  SAILBOAT = 100;
+  PADDLE_BOARD = 101;
+  WATER_POLO = 102;
+  AQUATIC_SPORT = 103;
+  SURFING = 104;
+  CANOEING = 105;
+  KAYAK_RAFTING = 106;
+  ROWING = 107;
+  MOTORBOAT = 108;
+  WEB_SWIMMING = 109;
+  DRIVING = 110;
+  FANCY_SWIMMING = 111;
+  SNORKELING = 112;
+  KITE_SURFING = 113;
+  ROCK_CLIMBING = 200;
+  SKATE = 201;
+  ROLLER_SKATING = 202;
+  PARKOUR = 203;
+  ATV = 204;
+  PARAGLIDER = 205;
+  CLIMBING_MACHINE = 300;
+  CLIMB_STAIRS = 301;
+  STEPPER = 302;
+  CORE_TRAINING = 303;
+  FLEXIBILITY_TRAINING = 304;
+  PILATES = 305;
+  GYMNASTICS = 306;
+  STRETCH = 307;
+  STRENGTH_TRAINING = 308;
+  CROSS_FIT = 309;
+  AEROBICS = 310;
+  PHYSICAL_TRAINING = 311;
+  WALL_BALL = 312;
+  DUMBBELL_TRAINING = 313;
+  BARBELL_TRAINING = 314;
+  WEIGHTLIFTING = 315;
+  DEADLIFT = 316;
+  BOBBY_JUMP = 317;
+  SIT_UPS = 318;
+  FUNCTIONAL_TRAINING = 319;
+  UPPER_LIMB_TRAINING = 320;
+  LOWER_LIMB_TRAINING = 321;
+  WAIST_TRAINING = 322;
+  BACK_TRAINING = 323;
+  SQUARE_DANCE = 400;
+  BELLY_DANCE = 401;
+  BALLET = 402;
+  STREET_DANCE = 403;
+  ZUMBA = 404;
+  NATIONAL_DANCE = 405;
+  JAZZ = 406;
+  LATIN_DANCE = 407;
+  BOXING = 500;
+  WRESTLING = 501;
+  MARTIAL_ARTS = 502;
+  TAICHI = 503;
+  MUAY_THAI = 504;
+  JUDO = 505;
+  TAEKWONDO = 506;
+  KARATE = 507;
+  FREE_SPARRING = 508;
+  SWORDSMANSHIP = 509;
+  FENCING = 510;
+  FOOTBALL = 600;
+  BASKETBALL = 601;
+  VOLLEYBALL = 602;
+  BASEBALL = 603;
+  SOFTBALL = 604;
+  RUGBY = 605;
+  HOCKEY = 606;
+  PINGPONG = 607;
+  BADMINTON = 608;
+  TENNIS = 609;
+  CRICKET = 610;
+  HANDBALL = 611;
+  BOWLING = 612;
+  SQUASH = 613;
+  BILLIARDS = 614;
+  SHUTTLECOCK = 615;
+  BEACH_FOOTBALL = 616;
+  BEACH_VOLLEYBALL = 617;
+  SEPAK_TAKRAW = 618;
+  OUTDOOR_SKATING = 700;
+  CURLING = 701;
+  SNOW_SPORTS = 702;
+  SNOWMOBILE = 703;
+  PUCK = 704;
+  SNOW_CAR = 705;
+  SLED = 706;
+  ARCHERY = 800;
+  DARTS = 801;
+  HORSE_RIDING = 802;
+  TUG_OF_WAR = 803;
+  HULA_HOOP = 804;
+  FLY_KITE = 805;
+  FISHING = 806;
+  FRISBEE = 807;
+  EQUESTRIAN = 10000;
+  TRACK_AND_FIELD = 10001;
+  RACING_CAR = 10002;
+}
+
+enum SEInfoWearSportType {
+  SESportType_NONE = 0;
+  SESportType_OUTSIDE_RUN = 1;
+  SESportType_OUTSIDE_MOVE = 2;
+  SESportType_INDOOR_RUN = 3;
+  SESportType_CLIMB = 4;
+  SESportType_CROSS_COUNTRY = 5;
+  SESportType_OUTSIDE_CYCLE = 6;
+  SESportType_INDOOR_CYCLE = 7;
+  SESportType_FREE_SPORT = 8;
+  SESportType_BASKETBALL = 9;
+  SESportType_FOOTBALL = 10;
+  SESportType_TABLE_TENNIS = 11;
+  SESportType_BADMINTON = 12;
+  SESportType_OUTSIDE_HIKING = 13;
+  SESportType_BMX = 14;
+  SESportType_HUNTING = 15;
+  SESportType_SAILING = 16;
+  SESportType_SKATEBOARDING = 17;
+  SESportType_ROLLER_SKATING = 18;
+  SESportType_OUTDOOR_SKATING = 19;
+  SESportType_EQUESTRIAN = 20;
+  SESportType_INDOOR_SWIMMING_L = 21;
+  SESportType_OPEN_WATER_L = 22;
+  SESportType_CORE_TRAINING = 23;
+  SESportType_MIXED_AEROBIC = 24;
+  SESportType_STRENGTH_TRAINING = 25;
+  SESportType_STRETCHING = 26;
+  SESportType_CLIMBING_MACHINE = 27;
+  SESportType_PILATES = 28;
+  SESportType_FLEXIBILITY_TRAINING = 29;
+  SESportType_INDOOR_FITNESS = 30;
+  SESportType_STEPPER = 31;
+  SESportType_STEP_TRAINING = 32;
+  SESportType_GYMNASTICS = 33;
+  SESportType_ELLIPTICAL = 34;
+  SESportType_YOGA = 35;
+  SESportType_FISHING = 36;
+  SESportType_CURLING = 37;
+  SESportType_INDOOR_SKATING = 38;
+  SESportType_CRICKET = 39;
+  SESportType_BASEBALL = 40;
+  SESportType_BOWLING = 41;
+  SESportType_SQUASH = 42;
+  SESportType_SOFTBALL = 43;
+  SESportType_CROQUET = 44;
+  SESportType_VOLLEYBALL = 45;
+  SESportType_HANDBALL = 46;
+  SESportType_BALLET = 47;
+  SESportType_BELLY_DANCE = 48;
+  SESportType_SQUARE_DANCE = 49;
+  SESportType_STREET_DANCE = 50;
+  SESportType_BALLROOM_DANCING = 51;
+  SESportType_DANCE = 52;
+  SESportType_ZUMBA = 53;
+  SESportType_KENDO = 54;
+  SESportType_KARATE = 55;
+  SESportType_BOXING = 56;
+  SESportType_JUDO = 57;
+  SESportType_WRESTLING = 58;
+  SESportType_TAICHI = 59;
+  SESportType_MUAY_THAI = 60;
+  SESportType_TAEKWONDO = 61;
+  SESportType_MARTIAL_ARTS = 62;
+  SESportType_FREE_SPARRING = 63;
+  SESportType_HIGH_INTENSITY_INTERVAL_TRAINING = 64;
+  SESportType_ARCHERY = 65;
+  SESportType_INDOOR_RUNNING = 66;
+  SESportType_PADDLE_BOARD = 67;
+  SESportType_WATER_POLO = 68;
+  SESportType_WATER_SPORTS = 69;
+  SESportType_WATER_SKIING = 70;
+  SESportType_KAYAKING = 71;
+  SESportType_KAYAK_RAFTING = 72;
+  SESportType_MOTORBOAT = 73;
+  SESportType_FIN_SWIMMING = 74;
+  SESportType_DIVING = 75;
+  SESportType_SYNCHRONIZED_SWIMMING = 76;
+  SESportType_SNORKELING = 77;
+  SESportType_KITE_SURFING = 78;
+  SESportType_ROCK_CLIMBING = 79;
+  SESportType_PARKOUR = 80;
+  SESportType_ATV = 81;
+  SESportType_PARAGLIDER = 82;
+  SESportType_STAIR_CLIMBING = 83;
+  SESportType_CROSSFIT = 84;
+  SESportType_AEROBICS = 85;
+  SESportType_PHYSICAL_TRAINING = 86;
+  SESportType_WALL_BALL = 87;
+  SESportType_DUMBBELL_TRAINING = 88;
+  SESportType_BARBELL_TRAINING = 89;
+  SESportType_WEIGHTLIFTING = 90;
+  SESportType_DEADLIFT = 91;
+  SESportType_BOBBY_JUMP = 92;
+  SESportType_SIT_UPS = 93;
+  SESportType_FUNCTIONAL_TRAINING = 94;
+  SESportType_UPPER_LIMB_TRAINING = 95;
+  SESportType_LOWER_LIMB_TRAINING = 96;
+  SESportType_WAISESportType_AND_ABDOMEN_TRAINING = 97;
+  SESportType_BACK_TRAINING = 98;
+  SESportType_NATIONAL_DANCE = 99;
+  SESportType_JAZZ = 100;
+  SESportType_LATIN_DANCE = 101;
+  SESportType_FENCING = 102;
+  SESportType_RUGBY = 103;
+  SESportType_HOCKEY = 104;
+  SESportType_TENNIS = 105;
+  SESportType_BILLIARDS = 106;
+  SESportType_SHUTTLECOCK = 107;
+  SESportType_SEPAK_TAKRAW = 108;
+  SESportType_SNOW_SPORTS = 109;
+  SESportType_SNOWMOBILE = 110;
+  SESportType_PUCK = 111;
+  SESportType_SNOW_CAR = 112;
+  SESportType_SLED = 113;
+  SESportType_DARTS = 114;
+  SESportType_TUG_OF_WAR = 115;
+  SESportType_HULA_HOOP = 116;
+  SESportType_FLY_A_KITE = 117;
+  SESportType_FRISBEE = 118;
+  SESportType_TRACK_AND_FIELD = 119;
+  SESportType_RACING_CAR = 120;
+  SESportType_ROWING_MACHINE_L = 121;
+  SESportType_ROPE_SKIPPING_L = 122;
+  SESportType_TRIATHLON_L = 123;
+  SESportType_MOUNTAIN_CYCLING = 124;
+  SESportType_KICKBOXING = 125;
+  SESportType_SKIING = 126;
+  SESportType_CROSS_COUNTRY_SKIING = 127;
+  SESportType_SNOWBOARDING = 128;
+  SESportType_ALPINE_SKIING = 129;
+  SESportType_DOUBLE_BOARD_SKIING = 130;
+  SESportType_FREE_EXERCISE = 131;
+  SESportType_PADDLEBOARD_SURFING = 132;
+  SESportType_KABADDI = 133;
+  SESportType_Golf = 134;
+  SESportType_INDOOR_WALKING = 135;
+  SESportType_Table_football = 136;
+  SESportType_Seven_stones = 137;
+  SESportType_Kho_kho = 138;
+  SESportType_Marathon = 139;
+  SESportType_Jumping_Jacks = 140;
+  SESportType_Pull_up_Bar = 141;
+  SESportType_Parallel_Bars = 142;
+  SESportType_High_Jump = 143;
+  SESportType_Long_Jump = 144;
+  SESportType_Pull_up = 145;
+  SESportType_Push_up = 146;
+  SESportType_Plank = 147;
+  SESportType_Foam_Rolling = 148;
+  SESportType_Fitness_Games = 149;
+  SESportType_Relaxing_Meditation = 150;
+  SESportType_Treadmill = 151;
+  SESportType_VO2_Max = 152;
+  SESportType_Australian_Rules_Football = 153;
+  SESportType_AmericanvFootball = 154;
+  SESportType_Pickleball = 155;
+  SESportType_Snowboarding_156 = 156;
+  SESportType_Group_Gymnastics = 157;
+  SESportType_Combat_Aerobics = 158;
+  SESportType_Bungee_Jumping = 159;
+  SESportType_Kick_Scooter = 160;
+  SESportType_Balance_Bike = 161;
+  SESportType_Leisure_Sports = 162;
+  SESportType_Shooting = 163;
+  SESportType_Trampoline = 164;
+  SESportType_Field_Hockey = 165;
+  SESportType_Outdoor_Football = 166;
+  SESportType_OPEN_WATER = 199;
+  SESportType_INDOOR_SWIMMING_H = 200;
+  SESportType_OUTSIDE_SWIMMING_H = 201;
+  SESportType_ROWING_MACHINE_H = 202;
+  SESportType_ROPE_SKIPPING_H = 203;
+  SESportType_TRIATHLON_H = 204;
+  SESportType_Outdoor_football_H = 205;
+  SESportType_Indoor_running_Ring = 206;
+  SESportType_Outdoor_running_Ring = 207;
+  SESportType_Outdoor_Walking_Ring = 208;
+  SESportType_Indoor_cycling_Ring = 209;
+  SESportType_Outdoor_cycling_Ring = 210;
+  SESportType_Badminton_Ring = 211;
+  SESportType_Tennis_Ring = 212;
+  SESportType_Soccer_Ring = 213;
+  SESportType_Cricket_Ring = 214;
+  SESportType_Yoga_Ring = 215;
+}
+
+enum SEGpsAccuracy {
+  GPS_LOW = 0;
+  GPS_MEDIUM = 1;
+  GPS_HIGH = 2;
+  GPS_UNKNOWN = 10;
+}
+
+message SESporting {
+  oneof payload {
+    SESportStatus sport_status = 1;
+    SESportRequest sport_request = 2;
+    SESportResponse sport_response = 3;
+    SEPhoneSportData phone_sport_data = 4;
+    SEWearSportData wear_sport_data = 5;
+    SEEcgData ecg_data = 6;
+    SEEcgCalibrationData ecg_calibration_data = 7;
+    SEAppMessageType App_message_type = 8;
+    SEAutoSportData.SEList auto_sport_data_list = 9;
+    SERingSportStatusData ring_Sport_Param_Data = 10;
+  }
+}
+
+message SESportStatus {
+  required uint32 sport_type = 1;
+  optional uint32 timestamp = 2;
+  optional uint32 duration = 3;
+  optional bool paused = 4;
+  optional bool standalone = 5;
+  optional uint32 select_version = 6;
+  optional bool app_launched = 7;
+}
+
+message SESportRequest {
+  enum SEState {
+    GPS_START_REQUEST = 0;
+    START = 1;
+    PAUSE = 2;
+    RESUME = 3;
+    STOP = 4;
+  }
+  enum SECode {
+    NORMAL_END = 0;
+    SPORT_DURATION_NO_METTING = 1;
+    DEVICE_STORAGE_SPACE_FULL = 2;
+    UNKNOWN = 10;
+  }
+  required uint32 timestamp = 1;
+  required uint32 sport_type = 2;
+  required SESportRequest.SEState state = 3;
+  optional uint32 support_versions = 4;
+  optional SESportRequest.SECode error_code = 5;
+}
+
+message SESportResponse {
+  enum SECode {
+    OK = 0;
+    BUSY = 1;
+    TYPE_NOT_MATCH = 2;
+    NO_PERMISSION = 3;
+    NOT_SUPPORT = 4;
+    LACK_OF_ACCURACY = 5;
+    CHARGING = 6;
+    LOW_BATTERY = 7;
+    SEEK_FAIL = 8;
+    SPACE_WILL_BE_FULL = 9;
+    SPACE_IS_FULL = 11;
+    DEVICE_IS_SPORTING = 12;
+    NORMAL_END = 13;
+    SPORT_DURATION_NO_METTING = 14;
+    DEVICE_STORAGE_SPACE_FULL = 15;
+    UNKNOWN = 10;
+  }
+  required SESportResponse.SECode code = 1;
+  optional SESportStatus sport_status = 2;
+  optional SEGpsAccuracy gps_accuracy = 3;
+  optional uint32 select_version = 4;
+}
+
+message SEPhoneSportData {
+  required SEGpsAccuracy gps_accuracy = 1;
+  required uint32 timestamp = 2;
+  required double longitude = 3;
+  required double latitude = 4;
+  optional double altitude = 5;
+  optional float speed = 6;
+  optional float bearing = 7;
+  optional float horizontal_accuracy = 8;
+  optional float vertical_accuracy = 9;
+  optional uint32 gps_Coordinate_system_type = 10;
+}
+
+message SEWearSportData {
+  enum SESportLevel {
+    INACTIVE = 0;
+    LOW = 1;
+    MEDIUM = 2;
+    HIGH = 3;
+  }
+  required uint32 heart_rate = 1;
+  required uint32 calories = 2;
+  optional uint32 steps = 3;
+  optional uint32 distance = 4;
+  optional uint32 sport_timestamp = 5;
+  optional SEWearSportData.SESportLevel sport_level = 6;
+}
+
+message SEEcgCalibrationData {
+  required bool ecg_calibration_state = 1;
+  optional uint32 ecg_calibration_mode = 2;
+  optional uint32 ecg_level_calibration = 3;
+  optional uint32 ecg_calibration_heart = 4;
+  optional uint32 ecg_calibration_systolic = 5;
+  optional uint32 ecg_calibration_diastolic = 6;
+}
+
+message SEEcgReportData {
+  optional uint32 ecg_heart = 1;
+  optional uint32 ecg_systolic = 2;
+  optional uint32 ecg_diastolic = 3;
+  optional uint32 ecg_hrvResult = 4;
+  optional uint32 ecg_healthIndex = 5;
+  optional uint32 ecg_fatigueIndex = 6;
+  optional uint32 ecg_bodyLoad = 7;
+  optional uint32 ecg_bodyQuality = 8;
+  optional uint32 ecg_cardiacFunction = 9;
+}
+
+message SEEcgData {
+  enum SEECGCommand {
+    ECG_REQUEST_MEASUREMENT = 0;
+    ECG_START_MEASUREMENT = 1;
+    ECG_ABNORMAL_END_MEASUREMENT = 2;
+    ECG_END_MEASUREMENT = 3;
+    ECG_MANUAL_END_MEASUREMENT = 4;
+  }
+  enum SEECGRespond {
+    OK = 0;
+    BUSY = 1;
+    CHARGING = 2;
+    LOW_BATTERY = 3;
+    END_MEASUREMENT_DATA_OK = 4;
+    END_MEASUREMENT_DATA_ERROR = 5;
+    UNKNOWN = 10;
+  }
+  optional SEEcgData.SEECGCommand ecg_command = 1;
+  optional SEEcgData.SEECGRespond ecg_respond = 2;
+  optional SEEcgData.SEECGRespond ecg_end_result = 3;
+  optional uint32 ecg_data_index = 4;
+  optional bytes ecg_data = 5;
+  optional SEEcgCalibrationData ecg_calibration_data = 6;
+  optional uint32 ecg_mode = 7;
+  optional SEEcgReportData ecg_report_data = 8;
+}
+
+message SEAppMessageType {
+  required uint32 measure_type = 1;
+  optional bool switch_measure = 2;
+  optional bool wrist_status = 3;
+  optional uint32 measure_value = 4;
+  optional uint32 measure_time = 5;
+  optional uint32 error_reason = 6;
+}
+
+message SEAutoSportData {
+  message SEList {
+    repeated SEAutoSportData list = 1;
+  }
+  optional uint32 autosport_type = 1;
+  optional uint32 autosport_starttime = 2;
+  optional uint32 autosport_duration = 3;
+  optional uint32 autosport_steps = 4;
+  optional uint32 autosport_intensity = 5;
+  optional uint32 autosport_kcal = 6;
+  optional bytes hr_data = 7;
+}
+
+message SERingSportStatusData {
+  enum SESportstatus {
+    SPORT_STATUS_NONE = 0;
+    SPORT_STATUS_START = 1;
+    SPORT_STATUS_PAUSE = 2;
+    SPORT_STATUS_RESUME = 3;
+    SPORT_STATUS_END = 4;
+  }
+  enum SESportEndstatus {
+    SPORT_ENDSTATUS_NONE = 0;
+    SPORT_ENDSTATUS_LOW_POWER = 1;
+    SPORT_ENDSTATUS_TIMEOUT = 2;
+    SPORT_ENDSTATUS_MEMOVER = 3;
+    SPORT_ENDSTATUS_CHARGE = 4;
+  }
+  enum SESportStartstatus {
+    SPORT_STARTSTATUS_NONE = 0;
+    SPORT_STARTSTATUS_LOW_POWER = 1;
+    SPORT_STARTSTATUS_UNWEAR = 2;
+    SPORT_STARTSTATUS_CHARING = 3;
+    SPORT_STARTSTATUS_SPORTING = 4;
+  }
+  optional bool is_sport_no_sync = 1;
+  optional bool is_sport_ing = 2;
+  optional SERingSportStatusData.SESportEndstatus sport_end_status = 3;
+  optional SERingSportStatusData.SESportstatus sport_status = 4;
+  optional SERingSportStatusData.SESportStartstatus sport_start_status = 5;
+  optional uint32 startsport_type = 6;
+  optional uint32 startsport_curtime = 7;
+  optional uint32 startsport_duration = 8;
+}

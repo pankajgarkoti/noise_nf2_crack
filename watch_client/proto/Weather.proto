@@ -1,0 +1,69 @@
+syntax = "proto2";
+
+import "nanopb.proto";
+import "Common.proto";
+
+option java_package = "com.zh.ble.wear.protobuf";
+option java_outer_classname = "WeatherProtos";
+
+message SEWeather {
+  oneof payload {
+    SEHourlyWeather hourly_Weather = 1;
+    SEForecastWeather forecast_weather = 2;
+    float pressure = 3;
+  }
+}
+
+message SEWeatherId {
+  required SETime pub_time = 1;
+  required string city_name = 2;
+  required string location_name = 3;
+}
+
+message SEHourlyWeather {
+  message SEData {
+    message SEList {
+      repeated SEHourlyWeather.SEData list = 1;
+    }
+    optional int32 now_temperature = 1;
+    optional int32 low_temperature = 2;
+    optional int32 high_temperature = 3;
+    optional uint32 humidity = 4;
+    optional uint32 weather_id = 5;
+    optional string weather_name = 6;
+    optional uint32 Wind_speed = 7;
+    optional uint32 wind_info = 8;
+    optional uint32 Probability_of_rainfall = 9;
+    optional uint32 ultraviolet_rays = 10;
+    optional uint32 wind_power = 11;
+    optional uint32 visibility = 12;
+  }
+  required SEWeatherId id = 1;
+  required SEHourlyWeather.SEData.SEList data_list = 2;
+}
+
+message SEForecastWeather {
+  message SEData {
+    message SEList {
+      repeated SEForecastWeather.SEData list = 1;
+    }
+    optional int32 now_temperature = 1;
+    optional int32 low_temperature = 2;
+    optional int32 high_temperature = 3;
+    optional uint32 humidity = 4;
+    optional uint32 aqi = 5;
+    optional uint32 weather_id = 6;
+    optional string weather_name = 7;
+    optional uint32 Wind_speed = 8;
+    optional uint32 wind_info = 9;
+    optional uint32 Probability_of_rainfall = 10;
+    optional string sun_rise = 11;
+    optional string sun_set = 12;
+    optional uint32 ultraviolet_rays = 13;
+    optional uint32 pm_ultraviolet_rays = 14;
+    optional uint32 wind_power = 15;
+    optional uint32 visibility = 16;
+  }
+  required SEWeatherId id = 1;
+  required SEForecastWeather.SEData.SEList data_list = 2;
+}

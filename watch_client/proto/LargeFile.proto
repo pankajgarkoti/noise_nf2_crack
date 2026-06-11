@@ -1,0 +1,66 @@
+syntax = "proto2";
+
+import "nanopb.proto";
+import "Common.proto";
+
+option java_package = "com.zh.ble.wear.protobuf";
+option java_outer_classname = "LargeFileProtos";
+
+enum SEType {
+  ALL = 0;
+  ROM = 1;
+  RES = 2;
+}
+
+message SELargeFile {
+  oneof payload {
+    SEPrepareOtaRequest prepare_ota_request = 1;
+    SEPrepareOtaResponse prepare_ota_response = 2;
+    uint32 days = 3;
+    bool agps_state = 4;
+    SEBreakpointContinuation breakpoint_continuation = 5;
+    SESoundPrepareInfo soundPrepare_info = 6;
+    SESoundResultInfo sound_result_info = 7;
+    SESoundInstallResult install_result = 8;
+  }
+}
+
+message SEPrepareOtaRequest {
+  required bool force = 1;
+  required SEType type = 2;
+  required string firmware_version = 3;
+  optional string file_md5 = 4;
+}
+
+message SEPrepareOtaResponse {
+  required SEPrepareStatus prepare_status = 1;
+}
+
+message SEBreakpointContinuation {
+  required uint32 breakpoint_continuation_state_sn = 1;
+  required bool breakpoint_continuation_state = 2;
+  required bool breakpoint_continuation_support = 3;
+}
+
+message SESoundPrepareInfo {
+  required string id = 1;
+  required uint32 sound_type = 2;
+  required uint32 target_file_size = 3;
+  required uint32 transfer_file_size = 4;
+}
+
+message SESoundResultInfo {
+  required SEPrepareStatus prepare_status = 1;
+  optional uint32 memory_size = 2;
+  optional uint32 memory_surplus = 3;
+}
+
+message SESoundInstallResult {
+  enum SESoundCode {
+    VERIFY_FAILED = 0;
+    INSTALL_FAILED = 1;
+    INSTALL_SUCCESS = 2;
+  }
+  required string id = 1;
+  required SESoundInstallResult.SESoundCode code = 2;
+}

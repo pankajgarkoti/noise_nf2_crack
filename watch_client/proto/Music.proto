@@ -1,0 +1,44 @@
+syntax = "proto2";
+
+import "nanopb.proto";
+import "Common.proto";
+
+option java_package = "com.zh.ble.wear.protobuf";
+option java_outer_classname = "MusicProtos";
+
+enum SEPlayerControlCommand {
+  PLAYING = 1;
+  PAUSE = 2;
+  PREV = 3;
+  NEXT = 4;
+  ADJUST_VOLUME_UP = 5;
+  ADJUST_VOLUME_DOWN = 6;
+}
+
+message SEMusic {
+  oneof payload {
+    SEPlayerInfo player_info = 1;
+    SEPlayerControlCommand player_control_command = 2;
+  }
+}
+
+message SEPlayerInfo {
+  enum SEState {
+    NONE = 0;
+    NO_PERMISSION = 1;
+    PLAYING = 2;
+    PAUSE = 3;
+    STOP = 4;
+    NO_MUSIC_PLAYING = 5;
+  }
+  required SEPlayerInfo.SEState state = 1;
+  optional string song_title = 2;
+  optional string player_name = 3;
+  optional string song_artist = 4;
+  optional uint32 current_volume = 5;
+  optional uint32 total_volume = 6;
+  optional uint32 total_progress = 7;
+  optional uint32 current_progress = 8;
+  optional bytes icon_img = 9;
+  optional uint32 nosic_fit_permission_type = 10;
+}

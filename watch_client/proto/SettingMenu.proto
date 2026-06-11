@@ -1,0 +1,653 @@
+syntax = "proto2";
+
+import "nanopb.proto";
+import "Common.proto";
+import "UserSettings.proto";
+
+option java_package = "com.zh.ble.wear.protobuf";
+option java_outer_classname = "SettingMenuProtos";
+
+enum SESensitivityMode {
+  SENSITIVITY_MODE_LOW = 0;
+  SENSITIVITY_MODE_MIDDLE = 1;
+  SENSITIVITY_MODE_HIGH = 2;
+}
+
+enum SETimingMode {
+  ALL_DAY_ON = 0;
+  TIMED_ON = 1;
+  ALL_DAY_OFF = 2;
+  SMART_ON = 3;
+}
+
+enum SEVibrationIntensityMode {
+  Level_1 = 0;
+  Level_2 = 1;
+  Level_3 = 2;
+}
+
+enum SEDialStyle {
+  POINTER = 0;
+  NUMBER = 1;
+}
+
+enum SEHabitType {
+  DRINK_WATER_TYPE = 0;
+  BRUSH_TEETH_TYPE = 1;
+  GET_UP_TYPE = 2;
+  MEDITATION_TYPE = 3;
+  STUDY_TYPE = 4;
+  WASH_HANDS = 5;
+  READING_TIME = 6;
+  TOILET_TIME = 7;
+  CUSTOM_TYPE = 255;
+}
+
+enum SEReminderType {
+  SLEEP_TIME_TYPE = 0;
+  GAME_TIME_TYPE = 1;
+  BREAKFAST_TIME_TYPE = 2;
+  LUNCH_TIME_TYPE = 3;
+  SNACKS_TIME_TYPE = 4;
+  DINNER_TIME_TYPE = 5;
+  HOMEWORK_TIME_TYPE = 6;
+  CUSTOM_TIME_TYPE = 255;
+}
+
+enum SECustomizeSsttingType {
+  CALL_FUNCATION = 0;
+  COMPASS = 1;
+  PRESSURE = 2;
+  BREATHE = 3;
+  STOPWATCH = 4;
+  COUNTDOWN = 5;
+  ALARM_CLOCK = 6;
+  WORLD_CLOCK = 7;
+  FLASHLIGHT = 8;
+}
+
+enum SEEV_CarStatusType {
+  EV_CAR_NULL = 0;
+  EV_CAR_LOCKING = 1;
+  EV_CAR_UNLOCK = 2;
+  EV_CAR_CYCLING = 3;
+  EV_CAR_END = 255;
+}
+
+enum SEEV_ChargeStatusType {
+  EV_CHARGE_NULL = 0;
+  EV_CHARGE_NO = 1;
+  EV_CHARGE_ING = 2;
+  EV_CHARGE_FULL = 3;
+  EV_CHARGE_END = 255;
+}
+
+enum SEEV_VehicleRemindType {
+  EV_REMIND_NULL = 0;
+  EV_TPMS_REMIND = 1;
+  EV_TRALIER_STEAL_REMIND = 2;
+  EV_LOCATION_REMIND = 3;
+  EV_CRASH_FALL_REMIND = 4;
+  EV_LOW_POWER_REMIND = 5;
+  EV_FULL_POWER_REMIND = 6;
+  EV_REMIND_END = 255;
+}
+
+enum SEEV_DataConnectType {
+  EV_APP_CONNECT_NULL = 0;
+  EV_APP_CONNECT_ACQUIRE = 1;
+  EV_APP_CONNECT_SUCCEDD = 2;
+  EV_APP_CONNECT_OUT = 3;
+  EV_APP_CONNECT_FALL = 4;
+  EV_APP_CONNECT_END = 255;
+}
+
+enum SEEV_DataFailType {
+  EV_APP_CONNECT_ERROR_NULL = 0;
+  EV_APP_CONNECT_NOT_LOG_IN = 1;
+  EV_APP_CONNECT_LOG_OUT = 2;
+  EV_APP_CONNECT_NFA_WATCH_REMOVE = 3;
+  EV_APP_CONNECT_USER_IS_ONBOARDED = 8;
+  EV_APP_CONNECT_OFF_LINE = 4;
+  EV_APP_CONNECT_NO_VIN = 5;
+  EV_APP_CONNECT_NO_PERMISSION = 6;
+  EV_APP_CONNECT_API_400_ERROR = 7;
+  EV_APP_CONNECT_ERROR_END = 255;
+}
+
+message SESettingMenu {
+  oneof payload {
+    SEWristScreen wrist_screen = 1;
+    SEEventInfo.SEList event_info_list = 2;
+    SEHeartRateMonitor heart_rate_monitor = 3;
+    SESedentaryReminder sedentary_reminder = 4;
+    SEClockInfo.SEList clock_info_list = 5;
+    SEMedicationReminder medication_reminder = 6;
+    SEDrinkWaterReminder drink_water_reminder = 7;
+    SEDoNotDisturbMode do_not_disturb_mode = 8;
+    SEVibrationIntensityMode vibration_intensity_mode = 9;
+    SEPowerSaving power_saving = 10;
+    SEOverlayScreen overlay_screen = 11;
+    SEInformationScreenDisplay information_screen_display = 12;
+    SEPhysiologicalCycle physiological_cycle = 13;
+    SEScreenSetting screen_setting = 14;
+    SERapidEyeMovement Rapid_eye_movement = 15;
+    SEAutomaticMotionRecognition automatic_motion_recognition = 16;
+    SEStockInfo stock_info = 17;
+    SEStockInfo.List stock_info_list = 18;
+    string symbol = 19;
+    SEStockSymbol.List stock_symbol_list = 20;
+    SEHaveMealsReminder have_meals_reminder = 21;
+    SEWashHandReminder wash_hand_reminder = 22;
+    SEContinuousBodyTemperature continuous_body_temperature = 23;
+    SEClassicBluetoothState classic_bluetooth_state = 24;
+    SESchoolMode school_mode = 25;
+    SESchedulerReminder.List schedule_reminder_list = 26;
+    SESleepMode sleep_mode = 27;
+    SEPressureMode pressure_mode = 28;
+    SENotificationSettings notification_settings = 29;
+    SEContinuousBloodOxygenSetting continuous_blood_oxygen_setting = 30;
+    SEFindWearSettings find_wear_setting = 31;
+    SEExamData.SEList exam_data_list = 32;
+    SECallReminderSettings call_reminder_setting = 33;
+    SESleepReminder sleep_reminder_setting = 34;
+    SESoundItem.SEList sound_list = 35;
+    SECustomizeSetting customizesetting = 36;
+    uint32 vibration_intensity_time = 37;
+    SERealTimeHeartRateSettings real_time_heart_rate_settings = 38;
+    SERealTimeHeartRateData real_time_heart_rate_data = 39;
+    SEBreathingLightSettings breathing_light_settings = 40;
+    SEQRcodeSettings QRcode_settings = 41;
+    string esim_eid = 42;
+    SEESIMBigdata esim_bigdata_settings = 43;
+    SEESIMCommondata esim_common_data_settings = 44;
+    uint32 delete_esim_id = 45;
+    SEESIMHttpdata esim_http_data = 46;
+    SEEV_REMIND_STATUS_ST ev_remind_status_st = 47;
+    SEEV_DATA_INFO_ST ev_data_info_st = 48;
+    SEAirPlaneMode air_plane_mode = 49;
+    SESpo2Monitor spo2_monitor = 50;
+    SEHRVMonitor hrv_monitor = 51;
+    SEBREATHING_RELAXATIONMonitor breathing_relaxation_monitor = 52;
+    SEhearRateReminder hear_rate_reminder = 53;
+    SESimpleSettingSummary Simple_setting_summary = 99;
+  }
+}
+
+message SEWristScreen {
+  required SETimingMode timing_mode = 1;
+  optional SESettingTime start_time = 2;
+  optional SESettingTime end_time = 3;
+  optional SESensitivityMode sensitivity_mode = 4;
+}
+
+message SEEventInfo {
+  message SEList {
+    repeated SEEventInfo list = 1;
+    optional uint32 support_max_events = 2;
+  }
+  required string description = 1;
+  required SETime time = 2;
+  optional bool Event_is_finish = 3;
+}
+
+message SEHeartRateMonitor {
+  enum SEMode {
+    AUTO = 0;
+    OFF = 1;
+  }
+  enum SEContinuousHeartRateMode {
+    ALL_DAY_HEART_RATE = 0;
+    INTELLIGENT_HEART_RATE = 1;
+  }
+  required SEHeartRateMonitor.SEMode mode = 1;
+  required uint32 frequency = 2;
+  required bool warning = 3;
+  required uint32 warning_value = 4;
+  optional bool sport_warning = 5;
+  optional uint32 sport_warning_value = 6;
+  optional SEHeartRateMonitor.SEContinuousHeartRateMode continuous_heart_rate_mode = 7;
+  optional uint32 low_warning_value = 8;
+}
+
+message SEClockInfo {
+  enum SEClockLabel {
+    ALARM_CLOCK = 0;
+    GET_UP = 1;
+    MEETING = 2;
+    APPOINTMENT = 3;
+    DINNER_PARTY = 4;
+  }
+  message SEData {
+    required SESettingTime time = 1;
+    optional uint32 week_days = 2;
+    required bool enable = 3;
+    required string Clock_name = 4;
+    optional SEClockInfo.SEClockLabel clock_label = 5;
+  }
+  message SEList {
+    repeated SEClockInfo list = 1;
+    optional uint32 support_max_clocks = 2;
+  }
+  required uint32 id = 1;
+  required SEClockInfo.SEData data = 2;
+}
+
+message SESedentaryReminder {
+  required bool on = 1;
+  required SESettingTime start_time = 2;
+  required SESettingTime end_time = 3;
+  required uint32 frequency = 4;
+  required bool no_disturb_in_launch_break = 5;
+  optional SESettingTime no_disturb_in_launch_break_start_time = 6;
+  optional SESettingTime no_disturb_in_launch_break_end_time = 7;
+}
+
+message SEDrinkWaterReminder {
+  required bool on = 1;
+  required SESettingTime start_time = 2;
+  required SESettingTime end_time = 3;
+  required uint32 frequency = 4;
+  optional bool no_disturb_in_launch_break = 5;
+  optional SESettingTime no_disturb_in_launch_break_start_time = 6;
+  optional SESettingTime no_disturb_in_launch_break_end_time = 7;
+}
+
+message SEMedicationReminder {
+  required bool on = 1;
+  required SESettingTime start_time = 2;
+  required SESettingTime end_time = 3;
+  required uint32 frequency = 4;
+}
+
+message SEHaveMealsReminder {
+  required bool on = 1;
+  required SESettingTime start_time = 2;
+  required SESettingTime end_time = 3;
+  required uint32 frequency = 4;
+}
+
+message SEWashHandReminder {
+  required bool on = 1;
+  required SESettingTime start_time = 2;
+  required SESettingTime end_time = 3;
+  required uint32 frequency = 4;
+  optional bool no_disturb_in_launch_break = 5;
+  optional SESettingTime no_disturb_in_launch_break_start_time = 6;
+  optional SESettingTime no_disturb_in_launch_break_end_time = 7;
+}
+
+message SEDoNotDisturbMode {
+  required bool do_not_disturb_switch = 1;
+  optional SESettingTime start_time = 2;
+  optional SESettingTime end_time = 3;
+  optional bool do_not_disturb_smart_switch = 4;
+}
+
+message SEPowerSaving {
+  required bool on = 1;
+}
+
+message SEOverlayScreen {
+  required bool on = 1;
+}
+
+message SERapidEyeMovement {
+  required bool on = 1;
+}
+
+message SEAutomaticMotionRecognition {
+  required bool sport_start_switch = 1;
+  required bool sport_stop_switch = 2;
+}
+
+message SEInformationScreenDisplay {
+  required SETimingMode timing_mode = 1;
+  required SESettingTime start_time = 2;
+  required SESettingTime end_time = 3;
+  required SEDialStyle dialStyle = 4;
+}
+
+message SEPhysiologicalCycle {
+  required bool remind_switch = 1;
+  required uint32 advance_day = 2;
+  required uint32 total_cycle_day = 3;
+  required uint32 physiological_cycle_day = 4;
+  required SETimeDate physiological_start_date = 5;
+  required bool preset = 6;
+  optional bool physiological_cycle_switch = 7;
+}
+
+message SEScreenSetting {
+  required uint32 brightness_level = 1;
+  required bool normally_on_switch = 2;
+  required uint32 on_screen_duration = 3;
+  required bool double_click_the_highlighted_screen = 4;
+}
+
+message SESimpleSettingSummary {
+  optional SEVibrationIntensityMode vibration_intensity_mode = 1;
+  optional SEPowerSaving power_saving = 2;
+  optional SEOverlayScreen overlay_screen = 3;
+  optional SELanguageId select_language_id = 4;
+}
+
+message SEStockInfo {
+  message List {
+    repeated SEStockInfo list = 1;
+  }
+  required string symbol = 1;
+  optional string market = 2;
+  optional string name = 3;
+  required float latest_price = 4;
+  required float pre_close = 5;
+  required uint32 halted = 6;
+  required uint32 timestamp = 7;
+  required uint32 delay_mintue = 8;
+}
+
+message SEStockSymbol {
+  message List {
+    repeated SEStockSymbol list = 1;
+  }
+  required string symbol = 1;
+  required bool is_widget = 2;
+  required uint32 order = 3;
+}
+
+message SEContinuousBodyTemperature {
+  enum SEMode {
+    AUTO = 0;
+    OFF = 1;
+  }
+  required SEContinuousBodyTemperature.SEMode mode = 1;
+  required uint32 frequency = 2;
+  optional SESettingTime start_time = 3;
+  optional SESettingTime end_time = 4;
+}
+
+message SEClassicBluetoothState {
+  required bool classic_bluetooth_switch = 1;
+  optional bool classic_bluetooth_disconnected_remind = 2;
+}
+
+message SESchoolMode {
+  optional bool school_mode_switch = 1;
+  optional SESettingTime start_time = 2;
+  optional SESettingTime end_time = 3;
+  optional uint32 reminder_advance_time = 4;
+  optional bool school_mode_aod_switch = 5;
+  optional uint32 school_mode_week_days = 6;
+  optional bool school_mode_allow_watch_exit = 7;
+}
+
+message SESchedulerReminder {
+  enum SESchedulerType {
+    ALERT = 0;
+    HABIT = 1;
+    REMINDER = 2;
+  }
+  message List {
+    repeated SESchedulerReminder list = 1;
+    optional uint32 support_max_schduler_alert = 2;
+    optional uint32 support_max_schduler_habit = 3;
+    optional uint32 support_max_schduler_reminder = 4;
+    optional uint32 support_max_habit_time_set = 5;
+  }
+  required SESchedulerReminder.SESchedulerType schedule_reminder_type = 1;
+  oneof payload {
+    SEAlert alert = 2;
+    SEHabit habit = 3;
+    SEReminder reminder = 4;
+  }
+}
+
+message SEAlert {
+  required string alert_name = 1;
+  required SESettingTime alert_time = 2;
+  required uint32 alert_repeat = 3;
+  required string notify_text = 4;
+}
+
+message SEHabitTimeSet {
+  message List {
+    repeated SEHabitTimeSet list = 1;
+  }
+  required SESettingTime time = 1;
+}
+
+message SEHabit {
+  required string habit_name = 1;
+  required uint32 alert_repeat = 2;
+  required SEHabitTimeSet.List habit_time_set_list = 3;
+  optional uint32 habit_type = 4;
+}
+
+message SEReminder {
+  required string reminder_name = 1;
+  required SESettingTime start_time = 2;
+  required SESettingTime end_time = 3;
+  required uint32 reminder_repeat = 4;
+  required uint32 reminder_notify_me_in_advance = 5;
+  optional uint32 reminder_type = 6;
+}
+
+message SESleepMode {
+  required bool sleep_mode_switch = 1;
+  required SESettingTime start_time = 2;
+  required SESettingTime end_time = 3;
+  optional bool Rapid_eye_movement = 4;
+  optional bool do_not_disturb_smart_switch = 5;
+  optional bool minimize_screen_brightness = 6;
+}
+
+message SEPressureMode {
+  required bool pressure_mode = 1;
+  required bool relaxation_reminder = 2;
+}
+
+message SENotificationSettings {
+  required bool notice_not_light_up = 1;
+  optional uint32 phone_remind_vibration_mode = 2;
+  optional uint32 phone_remind_ring_mode = 3;
+  optional bool notification_delay_reminder_switch = 4;
+}
+
+message SEContinuousBloodOxygenSetting {
+  enum SEMode {
+    AUTO = 0;
+    OFF = 1;
+  }
+  required SEContinuousBloodOxygenSetting.SEMode mode = 1;
+  required uint32 frequency = 2;
+  optional SESettingTime start_time = 3;
+  optional SESettingTime end_time = 4;
+}
+
+message SEFindWearSettings {
+  required uint32 find_wear_remind_vibration_mode = 1;
+  required uint32 find_wear_remind_ring_mode = 2;
+}
+
+message SEExamData {
+  message SEData {
+    required string exam_name = 1;
+    required SETime exam_time = 2;
+    required uint32 exam_duration = 3;
+    required uint32 exam_duration_of_nudges = 4;
+    optional bool exam_status = 5;
+  }
+  message SEList {
+    repeated SEExamData list = 1;
+    optional uint32 support_max_exam = 2;
+  }
+  required SEExamData.SEData data = 1;
+}
+
+message SECallReminderSettings {
+  required uint32 mode = 1;
+  required uint32 volume = 2;
+}
+
+message SESleepReminder {
+  required bool on = 1;
+  required SESettingTime time = 2;
+}
+
+message SESoundItem {
+  message SEList {
+    repeated SESoundItem list = 1;
+  }
+  required string id = 1;
+  required uint32 sound_type = 2;
+}
+
+message SECustomizeSetting {
+  required uint32 customize_left_click_settings = 1;
+}
+
+message SERealTimeHeartRateSettings {
+  required bool real_time_heart_rate_settings_switch = 1;
+  required uint32 real_time_heart_rate_settings_frequency = 2;
+  required uint32 real_time_heart_rate_settings_automatic_shutdown_time = 3;
+}
+
+message SERealTimeHeartRateData {
+  required uint32 real_time_heart_rate_data_timestamp = 1;
+  required uint32 real_time_heart_rate_data_value = 2;
+}
+
+message SEBreathingLightSettingsData {
+  message SEList {
+    repeated SEBreathingLightSettingsData list = 1;
+  }
+  required uint32 breathing_light_type = 1;
+  required bool breathing_light_switch = 2;
+  required uint32 breathing_light_color = 3;
+}
+
+message SEBreathingLightSettings {
+  required bool breathing_light_main_switch = 1;
+  required bool breathing_light_lightting_switch = 2;
+  required uint32 breathing_light_lightting_color = 3;
+  required SEBreathingLightSettingsData.SEList breathing_light_setting_data = 4;
+}
+
+message SEQRcodeSettingsData {
+  message SEList {
+    repeated SEQRcodeSettingsData list = 1;
+  }
+  required string QRcode_data = 1;
+}
+
+message SEQRcodeSettings {
+  required uint32 max_QRcode_setting_data = 1;
+  required uint32 QRcode_setting_data_len = 2;
+  required SEQRcodeSettingsData.SEList QRcode_setting_data = 3;
+}
+
+message SEESIMBigdata {
+  optional string esim_activation_code_data = 1;
+  optional string esim_http_data = 2;
+  optional uint32 esim_http_code = 3;
+}
+
+message SEESIMProfile {
+  message SEList {
+    repeated SEESIMProfile list = 1;
+  }
+  required string esim_profile_name = 1;
+  required string esim_profile_phone = 2;
+  required string esim_profile_operator = 3;
+  required bool esim_profile_enable_state = 4;
+  required string esim_profile_iccid = 5;
+}
+
+message SEESIMCommondata {
+  required uint32 esim_id = 1;
+  required string esim_name = 2;
+  required bool esim_switch = 3;
+  required bool esim_communication_switch = 4;
+  required bool esim_mobile_data_switch = 5;
+  required bool esim_data_roaming_switch = 6;
+  required bool esim_network_selection_switch = 7;
+  required uint32 esim_network_selection_index = 8;
+  required uint32 esim_profile_max = 9;
+  optional SEESIMProfile.SEList esim_profile_list = 10;
+}
+
+message SEESIMHttpdata {
+  optional string esim_http_url = 1;
+  optional string esim_http_data = 2;
+}
+
+message SEEV_CHARGE_STATUS_ST {
+  required SEEV_ChargeStatusType charge_status = 1;
+  required uint32 current_charge = 2;
+  required uint32 full_charing_time = 3;
+}
+
+message SEEV_TIRE_GAUGE_ST {
+  required uint32 front_wheel = 1;
+  required uint32 rear_wheel = 2;
+}
+
+message SEEV_DISPLAY_ST {
+  required uint32 total_distance = 1;
+  required double total_carbon_emission = 2;
+  required uint32 current_day_total_distance = 3;
+  required double current_day_avg_speed = 4;
+  required uint32 current_day_total_drinving_time = 5;
+}
+
+message SEEV_REMAINING_MILE_ST {
+  required uint32 str_mode = 1;
+  required uint32 pwr_mode = 2;
+  required uint32 eco_mode = 3;
+}
+
+message SEEV_APPLICATION_DATA_ST {
+  required SETime pub_time = 1;
+  required SEEV_CarStatusType car_status = 2;
+  required SEEV_CHARGE_STATUS_ST charge_status = 3;
+  required SEEV_REMAINING_MILE_ST remaining_mileage = 4;
+  required SEEV_TIRE_GAUGE_ST tire_gauge = 5;
+  required SEEV_DISPLAY_ST display = 6;
+}
+
+message SEEV_REMIND_STATUS_ST {
+  required SEEV_VehicleRemindType vehicle_remind = 1;
+}
+
+message SEEV_DATA_INFO_ST {
+  required SEEV_DataConnectType data_connect = 1;
+  optional SEEV_APPLICATION_DATA_ST application_data = 2;
+  optional SEEV_DataFailType datafail_type = 3;
+  optional uint32 refresh_interval = 4;
+}
+
+message SEAirPlaneMode {
+  required uint32 mode = 1;
+}
+
+message SESpo2Monitor {
+  required bool warning = 1;
+  required uint32 warning_value = 2;
+}
+
+message SEHRVMonitor {
+  required bool warning = 1;
+  required uint32 warning_value = 2;
+}
+
+message SEBREATHING_RELAXATIONMonitor {
+  required bool warning = 1;
+  required uint32 warning_value = 2;
+}
+
+message SEhearRateReminder {
+  required bool hight_warning = 1;
+  required uint32 hight_warning_value = 2;
+  required bool low_warning = 3;
+  required uint32 low_warning_value = 4;
+}

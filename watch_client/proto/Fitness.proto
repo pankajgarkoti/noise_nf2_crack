@@ -1,0 +1,445 @@
+syntax = "proto2";
+
+import "nanopb.proto";
+import "Common.proto";
+import "Sporting.proto";
+
+option java_package = "com.zh.ble.wear.protobuf";
+option java_outer_classname = "FitnessProtos";
+
+message SEFitness {
+  oneof payload {
+    SEFitnessTypeId fitness_type_id = 1;
+    SEFitnessTypeId.SEList fitness_type_id_list = 2;
+    bytes sport_ids = 3;
+    SEDailyData daily_data = 4;
+    SESleepData sleep_data = 5;
+    SEContinuousHeartRateData continuous_heart_rate_data = 6;
+    SEOfflineHeartRateData offline_heart_rate_data = 7;
+    SEContinuousBloodOxygenData continuous_blood_oxygen_data = 8;
+    SEOfflineBloodOxygenData offline_blood_oxygen_data = 9;
+    SEContinuousPressureData continuous_pressure_data = 10;
+    SEOfflinePressureData offline_pressure_data = 11;
+    SEContinuousTemperatureData continuous_temperature_data = 12;
+    SEOfflineTemperatureData offline_temperature_data = 13;
+    SEEffectiveStandingData effective_standing_data = 14;
+    SEActivityDurationData activity_duration_data = 15;
+    SEOfflineEcgData offline_ecg_data = 16;
+    SEExaminationRecordData examination_record_data = 17;
+    SEOverallDayMovementData gomore_overalldaymovement_data = 18;
+    SERingSleepResultData gomore_sleep_result_data = 19;
+    SERingSleepNapData gomore_sleepnap_data_list_data = 20;
+    SERingHealthScoreData gomore_healthy_score_data = 21;
+    SETodayActiveTypeData gomore_today_activity_indicators_data = 22;
+    SETodayRespiratoryRateData gomore_today_respiratoryrate_data = 23;
+    SEAutoActiveSportData gomore_auto_active_sport_data = 24;
+    SEBodyBatteryData gomore_bodybattery_data = 25;
+    SEStressDetectionData gomore_stress_detection_data = 26;
+    SERingBatteryData batteryData = 27;
+    uint32 fitness_data_reception_status = 28;
+    uint32 trans_mode = 29;
+    SESleepRRIData rriData = 30;
+    SESleepHRVData hrvData = 31;
+    SEContinuousHeartRateSportFiveMinAfterData heart_rate_sport_fivemin_after_data = 32;
+    SEContinuousRRIData contiunous_rridata = 33;
+  }
+}
+
+message SEFitnessTypeId {
+  enum SEFitnessFunctionType {
+    DAILY_DATA = 0;
+    SLEEP_DATA = 1;
+    CONTINUOUS_HEART_RATE_DATA = 2;
+    OFFLINE_HEART_RATE_DATA = 3;
+    CONTINUOUS_BLOOD_OXYGEN_DATA = 4;
+    OFFLINE_BLOOD_OXYGEN_DATA = 5;
+    CONTINUOUS_PRESSURE_DATA = 6;
+    OFFLINE_PRESSURE_DATA = 7;
+    CONTINUOUS_TEMPERATURE_DATA = 8;
+    OFFLINE_TEMPERATURE_DATA = 9;
+    OFFLINE_ECG_DATA = 10;
+    EFFECTIVE_STANDING_DATA = 11;
+    ACTIVITY_DURATION_DATA = 12;
+    EXAMINATION_RECORD_DATA = 13;
+    GOMORE_ALG_ACTIVITY_INDICATORS_DATA = 14;
+    GOMORE_ALG_SLEEP_RESULT_DATA = 15;
+    GOMORE_ALG_Sleep_Nap_Data = 16;
+    GOMORE_ALG_HEALTH_SCOREDATA_DATA = 17;
+    GOMORE_ALG_SEDENTARY_DATA = 18;
+    GOMORE_ALG_RESPIRATORYRATE_DATA = 19;
+    GOMORE_ALG_AUTOSPORT_DATA = 20;
+    GOMORE_ALG_BODYBATTERY_DATA = 21;
+    GOMORE_ALG_STRESSDETECTION_DATA = 22;
+    RING_BATTERY_DATA = 23;
+    CONTINUOUS_RRI_DATA = 24;
+    CONTINUOUS_HEART_RATE_SPORT_FIVEMIN_AFTER_DATA = 25;
+    Sleep_RRI_DATA = 26;
+    Sleep_HRV_DATA = 27;
+  }
+  message SEList {
+    repeated SEFitnessTypeId list = 1;
+  }
+  message SEFitnessOffsetType {
+    message SEList {
+      repeated SEFitnessTypeId.SEFitnessOffsetType list = 1;
+    }
+    required bool off_flag = 1;
+    required uint32 power_off_rtc_time = 2;
+    required uint32 phone_sync_rtc_time = 3;
+    required uint32 off_second_time = 4;
+  }
+  required SETime time = 1;
+  required uint32 fitness_function_type = 2;
+  optional SEFitnessTypeId.SEFitnessOffsetType.SEList fitness_data_offset_list = 3;
+}
+
+message SEDailyData {
+  required SEFitnessTypeId fitness_type_id = 1;
+  required uint32 steps_frequency = 2;
+  required bytes steps_data = 3;
+  required uint32 distance_frequency = 4;
+  required bytes distance_data = 5;
+  required uint32 calorie_frequency = 6;
+  required bytes calorie_data = 7;
+  optional uint32 HBA_data = 8;
+  optional uint32 today_steps_data = 9;
+  optional uint32 today_calorie_data = 10;
+  optional uint32 today_sleep_data = 11;
+  optional uint32 today_oura_calorie_data = 12;
+  optional uint32 today_sport_calorie_data = 13;
+  optional bytes today_oura_calorie_hourly_data = 14;
+  optional bytes today_sport_calorie_hourly_data = 15;
+}
+
+message SESleepData {
+  enum SESleepType {
+    DAYTIME_SLEEP = 0;
+    NIGHT_SLEEP = 1;
+  }
+  message SESleepDistributionData {
+    enum SESleepDistributionType {
+      AWAKE = 0;
+      LIGHT_SLEEP = 1;
+      DEEP_SLEEP = 2;
+      RAPID_EYE_MOVEMENT = 3;
+    }
+    message SEList {
+      repeated SESleepData.SESleepDistributionData list = 1;
+    }
+    required uint32 start_timestamp = 1;
+    required uint32 sleep_duration = 2;
+    required SESleepData.SESleepDistributionData.SESleepDistributionType sleep_distribution_type = 3;
+  }
+  required SEFitnessTypeId fitness_type_id = 1;
+  required uint32 start_sleep_timestamp = 2;
+  required uint32 end_sleep_timestamp = 3;
+  required uint32 sleep_duration = 4;
+  required uint32 sleep_score = 5;
+  required uint32 awake_time = 6;
+  required uint32 awake_time_percentage = 7;
+  required uint32 light_sleep_time = 8;
+  required uint32 light_sleep_time_percentage = 9;
+  required uint32 deep_sleep_time = 10;
+  required uint32 deep_sleep_time_percentage = 11;
+  optional uint32 rapid_eye_movement_time = 12;
+  optional uint32 rapid_eye_movement_time_percentage = 13;
+  required SESleepData.SESleepDistributionData.SEList sleep_distribution_data_list = 14;
+  optional SESleepData.SESleepType sleep_type = 15;
+  optional float sleep_readiness_score = 16;
+}
+
+message SEContinuousHeartRateData {
+  required SEFitnessTypeId fitness_type_id = 1;
+  required uint32 continuous_heart_rate_frequency = 2;
+  required bytes heart_rate_data = 3;
+  optional uint32 heart_rate_max_value = 4;
+  optional uint32 heart_rate_min_value = 5;
+  optional uint32 resting_heart_rate_value = 6;
+  optional bytes heart_rate_hour_max_value = 7;
+  optional bytes heart_rate_hour_min_value = 8;
+  optional uint32 frequency_version = 9;
+}
+
+message SEMeasureData {
+  message SEList {
+    repeated SEMeasureData list = 1;
+  }
+  required uint32 measure_timestamp = 1;
+  required uint32 measure_data = 2;
+}
+
+message SEOfflineHeartRateData {
+  required SEFitnessTypeId fitness_type_id = 1;
+  required SEMeasureData.SEList measure_data_list = 2;
+}
+
+message SEContinuousBloodOxygenData {
+  required SEFitnessTypeId fitness_type_id = 1;
+  required uint32 blood_oxygen_frequency = 2;
+  required bytes blood_oxygen_data = 3;
+  optional uint32 blood_oxygen_max_value = 4;
+  optional uint32 blood_oxygen_min_value = 5;
+  optional bytes blood_oxygen_hour_max_value = 6;
+  optional bytes blood_oxygen_hour_min_value = 7;
+}
+
+message SEOfflineBloodOxygenData {
+  required SEFitnessTypeId fitness_type_id = 1;
+  required SEMeasureData.SEList measure_data_list = 2;
+}
+
+message SEContinuousPressureData {
+  required SEFitnessTypeId fitness_type_id = 1;
+  required uint32 pressure_frequency = 2;
+  required bytes pressure_data = 3;
+  optional uint32 pressure_data_max_value = 4;
+  optional uint32 pressure_data_min_value = 5;
+  optional bytes RRi_data = 6;
+  optional uint32 frequency_version = 7;
+}
+
+message SEOfflinePressureData {
+  required SEFitnessTypeId fitness_type_id = 1;
+  required SEMeasureData.SEList measure_data_list = 2;
+}
+
+message SEContinuousTemperatureData {
+  required SEFitnessTypeId fitness_type_id = 1;
+  required uint32 temperature_frequency = 2;
+  required bytes temperature_data = 3;
+}
+
+message SEOfflineTemperatureData {
+  required SEFitnessTypeId fitness_type_id = 1;
+  required SEMeasureData.SEList measure_data_list = 2;
+}
+
+message SEEffectiveStandingData {
+  required SEFitnessTypeId fitness_type_id = 1;
+  required uint32 effective_standing_frequency = 2;
+  required bytes effective_standing_data = 3;
+}
+
+message SEActivityDurationData {
+  required SEFitnessTypeId fitness_type_id = 1;
+  required uint32 activity_duration_frequency = 2;
+  required bytes activity_duration_data = 3;
+  optional uint32 activity_duration_daily_time = 4;
+  optional uint32 activity_duration_daily_percentage = 5;
+  optional uint32 activity_duration_running_sport_time = 6;
+  optional uint32 activity_duration_running_sport_percentage = 7;
+  optional uint32 activity_duration_walking_sport_time = 8;
+  optional uint32 activity_duration_walking_sport_percentage = 9;
+  optional uint32 activity_duration_cycling_sport_time = 10;
+  optional uint32 activity_duration_cycling_sport_percentage = 11;
+  optional uint32 activity_duration_swimming_sport_time = 12;
+  optional uint32 activity_duration_swimming_sport_percentage = 13;
+  optional uint32 activity_duration_fitness_exercise_sport_time = 14;
+  optional uint32 activity_duration_fitness_exercise_sport_percentage = 15;
+  optional uint32 activity_duration_outdoor_sport_time = 16;
+  optional uint32 activity_duration_outdoor_sport_percentage = 17;
+  optional uint32 activity_duration_ball_game_sport_time = 18;
+  optional uint32 activity_duration_ball_game_sport_percentage = 19;
+  optional uint32 activity_duration_yoga_sport_time = 20;
+  optional uint32 activity_duration_yoga_sport_percentage = 21;
+  optional uint32 activity_duration_winter_sport_time = 22;
+  optional uint32 activity_duration_winter_sport_percentage = 23;
+  optional uint32 activity_duration_dance_movement_sport_time = 24;
+  optional uint32 activity_duration_dance_movement_sport_percentage = 25;
+  optional uint32 activity_duration_aquatic_sports_time = 26;
+  optional uint32 activity_duration_aquatic_sports_percentage = 27;
+  optional uint32 activity_duration_leisure_sports_time = 28;
+  optional uint32 activity_duration_leisure_sports_percentage = 29;
+  optional uint32 activity_duration_other_sports_time = 30;
+  optional uint32 activity_duration_other_sports_percentage = 31;
+}
+
+message SEOfflineEcgData {
+  enum SEECGCommand {
+    ECG_START_UPLOAD_DATA = 1;
+    ECG_UPLOADING_DATA = 2;
+    ECG_END_UPLOAD_DATA = 3;
+  }
+  required SEFitnessTypeId fitness_type_id = 1;
+  optional SEOfflineEcgData.SEECGCommand ecg_command = 2;
+  optional uint32 ecg_data_index = 3;
+  optional bytes ecg_data = 4;
+  optional SEEcgCalibrationData ecg_calibration_data = 5;
+  optional uint32 ecg_mode = 6;
+  optional SEEcgReportData ecg_report_data = 7;
+  optional uint32 ecg_data_max_count = 8;
+}
+
+message SEExaminationData {
+  message SEList {
+    repeated SEExaminationData list = 1;
+  }
+  required string examination_name = 1;
+  required uint32 examination_start_timestamp = 2;
+  required uint32 examination_duration = 3;
+  optional uint32 examination_reminder_frequency = 4;
+  optional uint32 heart_rate_measurement_count = 5;
+  required bytes heart_rate_measurement_data = 6;
+  optional uint32 heart_rate_measurement_max_data = 7;
+  optional uint32 heart_rate_measurement_min_data = 8;
+}
+
+message SEExaminationRecordData {
+  required SEFitnessTypeId fitness_type_id = 1;
+  required SEExaminationData.SEList examination_data_list = 2;
+}
+
+message SEOverallDayMovementData {
+  required SEFitnessTypeId fitness_type_id = 1;
+  optional bytes data = 2;
+}
+
+message SETodayActiveTypeData {
+  required SEFitnessTypeId fitness_type_id = 1;
+  optional bytes data = 2;
+}
+
+message SETodayRespiratoryRateData {
+  required SEFitnessTypeId fitness_type_id = 1;
+  optional bytes data = 2;
+}
+
+message SERingSleepResultData {
+  message SESleepDistributionData {
+    enum SESleepDistributionType {
+      AWAKE = 0;
+      LIGHT_SLEEP = 1;
+      DEEP_SLEEP = 2;
+      RAPID_EYE_MOVEMENT = 3;
+    }
+    message SEList {
+      repeated SERingSleepResultData.SESleepDistributionData list = 1;
+    }
+    required uint32 start_timestamp = 1;
+    required uint32 sleep_duration = 2;
+    required SERingSleepResultData.SESleepDistributionData.SESleepDistributionType sleep_distribution_type = 3;
+  }
+  message SESleepMovementsData {
+    enum SESleepMovementsType {
+      NO_MOVEMENT = 0;
+      LOW = 1;
+      MEDIUM = 2;
+      INTENSE = 3;
+    }
+    message SEList {
+      repeated SERingSleepResultData.SESleepMovementsData list = 1;
+    }
+    required uint32 start_timestamp = 1;
+    required uint32 sleep_duration = 2;
+    required SERingSleepResultData.SESleepMovementsData.SESleepMovementsType sleep_movements_type = 3;
+  }
+  required SEFitnessTypeId fitness_type_id = 1;
+  required bool exsit_sleep = 2;
+  optional uint32 entry_time = 3;
+  optional uint32 exit_time = 4;
+  optional uint32 sleep_duration = 5;
+  optional uint32 time_in_bed_time = 6;
+  optional uint32 sleep_latency = 7;
+  optional uint32 sleep_efficiency = 8;
+  optional uint32 sleep_score = 9;
+  optional uint32 awake_time = 10;
+  optional uint32 light_sleep_time = 11;
+  optional uint32 deep_sleep_time = 12;
+  optional uint32 rapid_eye_movement_time = 13;
+  required SERingSleepResultData.SESleepDistributionData.SEList sleep_distribution_data_list = 14;
+  required SERingSleepResultData.SESleepMovementsData.SEList sleep_movements_data_list = 15;
+}
+
+message SERingSleepNapData {
+  message SESleepNapListData {
+    message SEList {
+      repeated SERingSleepNapData.SESleepNapListData list = 1;
+    }
+    required bool exsit_sleep_nap = 1;
+    optional uint32 asleepnap_time = 2;
+    optional uint32 wakeupnap_time = 3;
+    optional uint32 sleepnap_duration = 4;
+  }
+  required SEFitnessTypeId fitness_type_id = 1;
+  required SERingSleepNapData.SESleepNapListData.SEList sleep_nap_list_data = 2;
+}
+
+message SERingHealthScoreData {
+  required SEFitnessTypeId fitness_type_id = 1;
+  optional uint32 healthscore = 2;
+  optional uint32 Sedentary_duration = 3;
+}
+
+message SEAutoActiveSportData {
+  message SEAutoactivesportlistData {
+    enum SEAutoactivesportType {
+      Undefined_Type = 0;
+      Walk_Type = 1;
+      Run_Type = 2;
+    }
+    enum SEAutoactivesportLevel {
+      LOW = 0;
+      MEDIUM = 1;
+      HIGH = 2;
+    }
+    message SEList {
+      repeated SEAutoActiveSportData.SEAutoactivesportlistData list = 1;
+    }
+    required SEAutoActiveSportData.SEAutoactivesportlistData.SEAutoactivesportType auto_active_sport_type = 1;
+    required SEAutoActiveSportData.SEAutoactivesportlistData.SEAutoactivesportLevel auto_active_sport_level = 2;
+    optional uint32 auto_active_starttime = 3;
+    optional uint32 auto_active_duration = 4;
+    optional uint32 auto_active_steps = 5;
+    optional uint32 auto_active_kcal = 6;
+  }
+  required SEFitnessTypeId fitness_type_id = 1;
+  optional SEAutoActiveSportData.SEAutoactivesportlistData.SEList auto_activesport_data_list = 2;
+}
+
+message SEBodyBatteryData {
+  required SEFitnessTypeId fitness_type_id = 1;
+  required uint32 body_battery_frequency = 2;
+  required bytes body_battery_data = 3;
+}
+
+message SEStressDetectionData {
+  required SEFitnessTypeId fitness_type_id = 1;
+  required uint32 stressdetection_frequency = 2;
+  required bytes stressdetection_data = 3;
+}
+
+message SERingBatteryData {
+  required SEFitnessTypeId fitness_type_id = 1;
+  required uint32 battery_frequency = 2;
+  required bytes battery_data = 3;
+}
+
+message SESleepRRIData {
+  required SEFitnessTypeId fitness_type_id = 1;
+  optional bytes data = 2;
+}
+
+message SESleepHRVData {
+  required SEFitnessTypeId fitness_type_id = 1;
+  optional bytes data = 2;
+}
+
+message SEHeartRateSportfiveminAfterListData {
+  message SEList {
+    repeated SEHeartRateSportfiveminAfterListData list = 1;
+  }
+  optional uint32 start_timetmp = 1;
+  optional bytes data = 2;
+}
+
+message SEContinuousHeartRateSportFiveMinAfterData {
+  required SEFitnessTypeId fitness_type_id = 1;
+  required SEHeartRateSportfiveminAfterListData.SEList data_list = 2;
+}
+
+message SEContinuousRRIData {
+  required SEFitnessTypeId fitness_type_id = 1;
+  optional bytes data = 2;
+  optional uint32 continuous_RRi_frequency = 3;
+  optional uint32 frequency_version = 4;
+}

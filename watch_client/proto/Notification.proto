@@ -1,0 +1,180 @@
+syntax = "proto2";
+
+import "nanopb.proto";
+import "Common.proto";
+
+option java_package = "com.zh.ble.wear.protobuf";
+option java_outer_classname = "NotificationProtos";
+
+enum SECallState {
+  ANSWER_PHONE = 0;
+  HANG_PHONE = 1;
+  MUTE = 2;
+}
+
+enum SEIOSAppTag {
+  APP_MAIN = 0;
+  APP_CALL = 1;
+  APP_MISS_CALL = 2;
+  APP_SMS = 3;
+  APP_QQ = 4;
+  APP_WECHAT = 5;
+  APP_SKYPE = 6;
+  APP_WHATSAPP = 7;
+  APP_FACEBOOK = 8;
+  APP_MESSENGER = 9;
+  APP_LINKEDLN = 16;
+  APP_TWITTER = 17;
+  APP_VIBER = 18;
+  APP_LINE = 19;
+  APP_GMAIL = 20;
+  APP_OUTLOOK = 21;
+  APP_INSTAGRAM = 22;
+  APP_SNAPCHAT = 23;
+  APP_MAIL = 24;
+  APP_CALENDAR = 25;
+  APP_ZALO = 32;
+  APP_TELEGRAM = 33;
+  APP_KAKAOTALK = 34;
+  APP_VK = 35;
+  APP_OK = 36;
+  APP_ICQ = 37;
+  APP_YOUTUBE = 39;
+  APP_PINTEREST = 40;
+  APP_HANGOUT = 41;
+  APP_PHONRPE = 48;
+  APP_GOOGLE_PLAY = 49;
+  APP_PAYTM = 50;
+  APP_NAUKRI = 51;
+  APP_INSHOT = 52;
+  APP_GOOGLE_NEWS = 53;
+  APP_OLA = 54;
+  APP_UBER = 55;
+  APP_FLIPKART = 56;
+  APP_AMAZON = 57;
+  APP_WHATSAPP_BUSINESS = 64;
+  APP_NOISEFIT = 65;
+  APP_GOOGLE_CLASSROOM = 66;
+  APP_TIKTOK = 67;
+  APP_TEXTNOW = 68;
+  APP_DISCORD = 69;
+  APP_AIRTEL_THANKS = 70;
+  APP_TVS_CONNECT = 71;
+  APP_OTHER = 255;
+}
+
+message SENotification {
+  oneof payload {
+    SESystemNotification system_notification = 1;
+    SEAppNotification app_notification = 2;
+    SEIOSNotification.SEList ios_notification_list = 3;
+    SECallState call_state = 4;
+    SEQuickReply.SEList quick_reply_list = 5;
+    SEQuickReplyMessage quick_reply_message = 6;
+    SEContacts.SEList contacts_list = 7;
+    SEContacts.SEList collection_contacts_list = 8;
+    SESOSContacts sos_contacts = 9;
+    SEContactsCY_2 contacts_cy_2 = 10;
+    SEContactsAvatarData contact_avatar_data = 11;
+    SEContactsAvatar.SEList contacts_avatar_list = 12;
+    SEGlodFriendContacts.SEList glod_friend_contacts = 13;
+    SEGlodFriendEmoji glod_friend_emoji = 14;
+  }
+}
+
+message SESystemNotification {
+  enum SEType {
+    CALL = 0;
+    MISS_CALL = 1;
+    MESSAGE = 2;
+  }
+  required SESystemNotification.SEType type = 1;
+  required string phone_number = 2;
+  required string contacts_info = 3;
+  optional string message_text = 4;
+}
+
+message SEAppNotification {
+  required string app_name = 1;
+  required string page_name = 2;
+  required string title = 3;
+  required string text = 4;
+  required string ticker_text = 5;
+}
+
+message SEIOSNotification {
+  message SEList {
+    repeated SEIOSNotification list = 1;
+  }
+  required bool enable_switch = 1;
+  required SEIOSAppTag app_type = 2;
+}
+
+message SEQuickReplyMessage {
+  required string phone_number = 1;
+  required string text = 2;
+}
+
+message SEQuickReply {
+  message SEList {
+    repeated SEQuickReply list = 1;
+  }
+  required string text = 1;
+}
+
+message SEContacts {
+  message SEList {
+    repeated SEContacts list = 1;
+  }
+  optional string contacts_name = 1;
+  optional string contacts_number = 2;
+  optional uint32 contacts_sequence = 3;
+}
+
+message SESOSContacts {
+  required bool sos_contacts_switch = 1;
+  required SEContacts.SEList sos_contacts_list = 2;
+  optional uint32 max_sos_contacts_all_count = 3;
+}
+
+message SEContactsCY_2 {
+  required uint32 contacts_all_count = 1;
+  required SEContacts.SEList contacts_list = 2;
+  optional uint32 max_contacts_all_count = 3;
+}
+
+message SEContactsAvatar {
+  message SEList {
+    repeated SEContactsAvatar list = 1;
+  }
+  optional string contacts_name = 1;
+  optional string contacts_number = 2;
+  optional uint32 contacts_sequence = 3;
+  optional string contacts_avatar_name = 4;
+  optional bool contacts_avatar_exist = 5;
+}
+
+message SEContactsAvatarData {
+  required uint32 avatar_hight = 1;
+  required uint32 avatar_width = 2;
+  required uint32 avatar_rule = 3;
+  required uint32 max_avatar_count = 4;
+  required SEContactsAvatar.SEList contacts_avatar_list = 5;
+}
+
+message SEGlodFriendContacts {
+  message SEList {
+    repeated SEGlodFriendContacts list = 1;
+  }
+  required string call_contacts_name = 1;
+  optional uint32 call_contacts_id = 2;
+}
+
+message SEGlodFriendEmoji {
+  required string call_contacts_name = 1;
+  required uint32 emoji = 2;
+  required uint32 color = 3;
+  required SETime time = 4;
+  optional uint32 FriendEmojiState = 5;
+  optional uint32 call_contacts_id = 6;
+}

@@ -1,0 +1,86 @@
+syntax = "proto2";
+
+import "nanopb.proto";
+import "Common.proto";
+
+option java_package = "com.zh.ble.wear.protobuf";
+option java_outer_classname = "AlexaProtos";
+
+enum SEAlexaResultType {
+  ALEXA_START_LISTENING = 1;
+  ALEXA_END_LISTENING = 2;
+  ALEXA_AUTH_STATUS = 3;
+  ALEXA_ERROR_AUTH = 4;
+  ALEXA_ERROR_UNSUPPORTED_AREA = 5;
+  ALEXA_TEMPLATE_GENERAL = 6;
+  ALEXA_SPEECHRECOGNIZER_EXPECTSPEECH = 7;
+  ALEXA_ALERT_AVS = 8;
+  ALEXA_COUNTDOWN_SET = 9;
+  ALEXA_ALERTS_SETALERT_LIST = 10;
+  ALEXA_SPORTS_SET = 11;
+  ALEXA_HEART_RATE_SET = 12;
+  ALEXA_PRESSURE_SET = 13;
+  ALEXA_BLOOD_OXYGEN_SET = 14;
+  ALEXA_FIND_PHONE_SET = 15;
+  ALEXA_EVENT_REMIND = 16;
+}
+
+message SEAleax {
+  oneof payload {
+    SEAlexaInstruction instruction = 1;
+  }
+}
+
+message SEAlexaInstruction {
+  required SEAlexaResultType result_type = 1;
+  optional SEAlexaTemplateGeneral template_general = 2;
+  optional uint32 alexa_error_code = 3;
+  optional SEAlexaAlertData alert_data = 4;
+  optional uint32 alexa_dialog_id = 5;
+  optional uint32 countdown_time = 6;
+  optional SEAlexaClockInfo.SEList alexa_clock_info_list = 7;
+  optional uint32 sports_type = 8;
+  optional SEAlexaEventRemind.SEList alexa_event_remind_info_list = 9;
+}
+
+message SEAlexaTemplateGeneral {
+  required SEAlexaTitle title = 1;
+  required string text = 2;
+}
+
+message SEAlexaTitle {
+  required string main_title = 1;
+  required string sub_title = 2;
+}
+
+message SEAlexaAlertData {
+  required uint32 alexa_hour = 1;
+  required uint32 alexa_min = 2;
+  required uint32 alexa_week = 3;
+  required string alexa_token = 4;
+  required uint32 alexa_type = 5;
+  required uint32 alexa_dara_type = 6;
+}
+
+message SEAlexaClockInfo {
+  message SEData {
+    required SESettingTime time = 1;
+    optional uint32 week_days = 2;
+    required bool enable = 3;
+  }
+  message SEList {
+    repeated SEAlexaClockInfo list = 1;
+    optional uint32 support_max_clocks = 2;
+  }
+  required uint32 id = 1;
+  required SEAlexaClockInfo.SEData data = 2;
+}
+
+message SEAlexaEventRemind {
+  message SEList {
+    repeated SEAlexaEventRemind list = 1;
+    optional uint32 support_max_event_remind = 2;
+  }
+  required SETime alexa_event_remind_time = 1;
+  required string alexa_event_remind_lable = 2;
+}

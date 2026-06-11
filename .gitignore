@@ -8,7 +8,16 @@ extracted/
 *.log
 .DS_Store
 
+# Internal-only notes (not for source control)
+HANDOFF.md
+
 # Native libs (large binaries, extracted from APK)
 *.so
 *.pyc
 watch_python_src/stdlib.zip
+
+# NF 2 client: venv, generated protobuf bindings, captured device dumps
+.venv/
+__pycache__/
+watch_client/pb/
+dumps/

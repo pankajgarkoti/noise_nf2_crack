@@ -1,0 +1,102 @@
+syntax = "proto2";
+
+import "nanopb.proto";
+import "Common.proto";
+
+option java_package = "com.zh.ble.wear.protobuf";
+option java_outer_classname = "FactoryProtos";
+
+enum SEHeartRateSwitch {
+  HEART_RATE_START = 0;
+  HEART_RATE_STOP = 1;
+}
+
+enum SEGsensorGeomagneticSwitch {
+  GSENSOR_GEOMAGNETIC_START = 0;
+  GSENSOR_GEOMAGNETIC_STOP = 1;
+}
+
+enum SETriaxialSwitch {
+  TRIAXIAL_START = 0;
+  TRIAXIAL_STOP = 1;
+}
+
+enum SELogRespond {
+  START_LOG_UPDATE = 0;
+  STOP_LOG_UPDATE = 1;
+  NO_LOG = 2;
+}
+
+message SEFactory {
+  oneof payload {
+    SEFileInfo file = 1;
+    SEHeartRateSwitch heart_rate_switch = 2;
+    SEHeartRateLeakage heart_rate_leakage = 3;
+    SEHeartRateLeakageRawDate heart_rate_leakage_raw_date = 4;
+    SELogRespond log_respond = 5;
+    SEBluetoothNameSetting bluetooth_name_setting = 6;
+    SEGsensorGeomagneticSwitch gsensor_geomagnetic_switch = 7;
+    SEGsensorGeomagneticRawDate gsensor_geomagnetic_raw_date = 8;
+    SETriaxialSwitch triaxial_switch = 9;
+    SETriaxialRawDate triaxial_raw_date = 10;
+    SEBuriedFiles buried_file = 11;
+    SEDevelopeSwitch develope_switch = 12;
+    SEDevelopeMode develope_mode = 13;
+  }
+}
+
+message SEFileInfo {
+  required string file_name = 1;
+  required bytes data = 2;
+  optional uint32 file_state = 3;
+}
+
+message SEHeartRateLeakage {
+  required uint32 leakage_type = 1;
+  required uint32 green_light = 2;
+  required uint32 infrared = 3;
+  required uint32 red_light = 4;
+  required uint32 ambient_light = 5;
+}
+
+message SEHeartRateLeakageRawDate {
+  required bytes data = 1;
+}
+
+message SEGsensorGeomagneticRawDate {
+  required bytes data = 1;
+}
+
+message SETriaxialRawDate {
+  required bytes data = 1;
+}
+
+message SEBluetoothNameSetting {
+  enum SESeetingRequestType {
+    SEETING_SUCCESS = 0;
+    SEETING_FAIL = 1;
+    SEETING_CRC_ERROR = 2;
+    SEETING_NAME_TOO_LONG = 3;
+    SEETING_NAME_CHARACTER_NON_COMPLIANCE = 4;
+    SEETING_NAME_NO_PERMISSION = 5;
+  }
+  required string bluetooth_name = 1;
+  required uint32 bluetooth_name_crc = 2;
+  optional SEBluetoothNameSetting.SESeetingRequestType setting_request_type = 3;
+}
+
+message SEBuriedFiles {
+  required string file_name = 1;
+  required bytes buried_files_ids = 2;
+}
+
+message SEDevelopeSwitch {
+  required uint32 switchstate = 1;
+  required uint32 mode = 2;
+}
+
+message SEDevelopeMode {
+  required uint32 index = 1;
+  required bytes data = 2;
+  required uint32 send_status = 3;
+}

@@ -1,0 +1,107 @@
+syntax = "proto2";
+
+import "nanopb.proto";
+import "Common.proto";
+
+option java_package = "com.zh.ble.wear.protobuf";
+option java_outer_classname = "WatchFaceProtos";
+
+enum SESettingResult {
+  SUCCESS = 0;
+  FAIL = 1;
+  USED_NOW = 2;
+}
+
+message SEWatchFace {
+  oneof payload {
+    SEWatchFaceItem.SEList watch_face_list = 1;
+    string id = 2;
+    SESettingResult setting_result = 3;
+    SEWatchFacePrepareInfo watch_facePrepare_info = 4;
+    SEWatchFaceResultInfo watchFace_result_info = 5;
+    SEInstallResult install_result = 6;
+    SEWatchFaceConfig watch_face_config = 7;
+  }
+}
+
+message SEWatchFaceItem {
+  message SEList {
+    repeated SEWatchFaceItem list = 1;
+  }
+  required string id = 1;
+  required bool is_current = 2;
+  optional bool is_remove = 3;
+}
+
+message SEWatchFacePrepareInfo {
+  required string id = 1;
+  required uint32 target_file_size = 2;
+  required uint32 transfer_file_size = 3;
+  optional bool is_replaceable = 4;
+  optional SEWatchFaceConfig watch_face_config = 5;
+  optional uint32 watch_face_file_config = 6;
+}
+
+message SEWatchFaceResultInfo {
+  required SEPrepareStatus prepare_status = 1;
+  optional uint32 memory_size = 2;
+  optional uint32 memory_surplus = 3;
+}
+
+message SEInstallResult {
+  enum SECode {
+    VERIFY_FAILED = 0;
+    INSTALL_FAILED = 1;
+    INSTALL_SUCCESS = 2;
+  }
+  required string id = 1;
+  required SEInstallResult.SECode code = 2;
+  optional SEWatchFaceConfig watch_face_config = 3;
+}
+
+message SEWatchFaceConfig {
+  required string id = 1;
+  optional uint32 rule_count = 2;
+  optional SEComplexFunctionsConfig.SEList complex_functions_config_list = 3;
+  optional SEWatchFaceFileConfig complex_functions_file_config_list = 4;
+  optional SEWatchFaceFileConfig background_file_config_list = 5;
+  optional SEWatchFaceFileConfig thumbnail_file_config_list = 6;
+  optional SEWatchFaceFileConfig point_file_config_list = 7;
+  optional SEWatchFaceFileConfig number_file_config_list = 8;
+}
+
+message SEComplexFunctionsConfig {
+  message SEList {
+    repeated SEComplexFunctionsConfig list = 1;
+  }
+  required uint32 complex_functions_config_position = 1;
+  required SEComplexFunctionsConfigType.SEList complex_functions_config_type_list = 2;
+  required uint32 complex_functions_config_type_choose = 3;
+}
+
+message SEComplexFunctionsConfigType {
+  message SEList {
+    repeated SEComplexFunctionsConfigType list = 1;
+  }
+  required uint32 complex_functions_config_type = 1;
+}
+
+message SEWatchFaceFileList {
+  message SEList {
+    repeated SEWatchFaceFileList list = 1;
+  }
+  required uint32 file_size = 1;
+  required uint32 file_number = 2;
+  required string file_md5 = 3;
+  optional string dial_file_md5 = 4;
+  optional string number_type_file_md5 = 5;
+  optional string number_position_file_md5 = 6;
+  optional uint32 number_color_hex = 7;
+  optional uint32 background_color_hex = 8;
+}
+
+message SEWatchFaceFileConfig {
+  required uint32 watch_face_number = 1;
+  optional uint32 now_used_file_number = 2;
+  optional SEWatchFaceFileList.SEList watch_face_file_list = 3;
+}

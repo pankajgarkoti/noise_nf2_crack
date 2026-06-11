@@ -1,0 +1,3 @@
+syntax = "proto2";
+// Stub: nanopb generator options were stripped during recovery; they do not
+// affect the BLE wire format. This empty file satisfies the import.
